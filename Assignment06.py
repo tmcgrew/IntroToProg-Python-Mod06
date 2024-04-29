@@ -15,6 +15,11 @@
 # TMcGrew, 2024-04-29, reconfigured to use classes and methods and better separation of concerns
 # ------------------------------------------------------------------
 
+# imports
+
+import json
+from json import JSONDecodeError
+
 class IO:
     """
     A collection of presentation layer functions that manage user input and output
@@ -25,7 +30,7 @@ class IO:
 
     @staticmethod
     def output_error_messages(message: str, error: Exception = None):
-        ''' This function displays the a custom error messages to the user
+        ''' This function displays a custom error messages to the user
 
         ChangeLog: (Who, When, What)
         TMcGrew,04.29.2024,Created function
@@ -39,7 +44,7 @@ class IO:
 
     @staticmethod
     def output_menu(menu: str):
-        ''' This function displays the a menu of choices to the user
+        ''' This function displays a menu of choices to the user
 
         ChangeLog: (Who, When, What)
         TMcGrew,04.29.2024,Created function
@@ -205,11 +210,6 @@ class FileProcessor:
                 file.close()
 
 
-# imports
-
-import json
-from json import JSONDecodeError
-
 # -- data -- #
 
 # constants
@@ -243,8 +243,6 @@ while (menu_choice != "4"):
     # # Present the menu of choices
     IO.output_menu(menu=MENU)  # now in two different functions instead of MENU and input on one line
     IO.input_menu_choice()
-
-    # menu_choice = input('MENU + \n Your selection?: ')
 
     if (menu_choice == '1'):
         IO.input_student_data(student_data=students)
