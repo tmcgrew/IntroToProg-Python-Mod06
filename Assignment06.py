@@ -13,6 +13,8 @@
 # TMcGrew, 2024-04-28, reconfigured functions to now have parameters and take arguments
 #       instead of using only global variables.
 # TMcGrew, 2024-04-29, reconfigured to use classes and methods and better separation of concerns
+# TMcGrew, 2024-05-02, moved the data above the classes and added some missing params in docstrings
+#       to some functions
 # ------------------------------------------------------------------
 
 # imports
@@ -20,6 +22,26 @@
 import json
 from json import JSONDecodeError
 
+# -- data -- #
+
+# constants
+
+MENU: str = "\n --- Course Registration Program --- \n"
+MENU += "Select from the following menu: \n"
+MENU += "1. Register a Student for a Course \n"
+MENU += "2. Show current data \n"
+MENU += "3. Save data to a file \n"
+MENU += "4. Exit the program \n"
+MENU += "-------------------------------\n"
+
+FILE_NAME: str = "Enrollments.json"
+
+# variables
+
+menu_choice: str = ""
+students: list[dict[str, str]] = []  # table of student data (list of dictionaries)
+
+# Presentation --------------------------------------- #
 class IO:
     """
     A collection of presentation layer functions that manage user input and output
@@ -35,6 +57,9 @@ class IO:
         ChangeLog: (Who, When, What)
         TMcGrew,04.29.2024,Created function
 
+        :param message: string with message data to display
+        :param error: Exception object with technical message to display
+
         :return: None
         '''
         print(message, end="\n\n")
@@ -48,6 +73,7 @@ class IO:
 
         ChangeLog: (Who, When, What)
         TMcGrew,04.29.2024,Created function
+        :param menu: string with menu of choices to display
 
         :return: None
         '''
@@ -74,6 +100,7 @@ class IO:
 
         ChangeLog: (Who, When, What)
         TMcGrew,04.29.2024,Created function
+        :param student_data: list of dictionaries to display
 
         :return: None
         '''
@@ -89,6 +116,8 @@ class IO:
 
         ChangeLog: (Who, When, What)
         TMcGrew,04.29.2024,Created function
+
+        :param student_data: list of dictionaries to input student data to by appending it
 
         :return: None
         '''
@@ -125,7 +154,7 @@ class IO:
         except Exception as e:
             IO.output_error_messages("There was a non-specific error!\n",e)
 
-
+# Processing --------------------------------------- #
 class FileProcessor:
     """
     A collection of processing layer functions that work with Json files
@@ -142,7 +171,10 @@ class FileProcessor:
          ChangeLog: (Who, When, What)
          TMcGrew,04.29.2024,Created function
 
-         :return: None
+        :param file_name: string data with name of file to read from
+        :param student_data: list of dictionary rows to be filled with file data
+
+        :return: None
          """
 
         file: TextIO = None
@@ -181,7 +213,10 @@ class FileProcessor:
          ChangeLog: (Who, When, What)
          TMcGrew,04.29.2024,Created function
 
-         :return: None
+        :param file_name: string data with name of file to write to
+        :param student_data: list of dictionary rows to be writen to the file
+
+        :return: None
          """
 
         file: TextIO = None
@@ -209,26 +244,6 @@ class FileProcessor:
             if file.closed == False:
                 file.close()
 
-
-# -- data -- #
-
-# constants
-
-MENU: str = "\n --- Course Registration Program --- \n"
-MENU += "Select from the following menu: \n"
-MENU += "1. Register a Student for a Course \n"
-MENU += "2. Show current data \n"
-MENU += "3. Save data to a file \n"
-MENU += "4. Exit the program \n"
-MENU += "-------------------------------\n"
-
-FILE_NAME: str = "Enrollments.json"
-
-# variables
-
-json_data: str = ""  # don't need this if using json module or you could but it should be a list then
-menu_choice: str = ""
-students: list[dict[str, str]] = []  # table of student data (list of dictionaries)
 
 
 # Beginning of the main body of this script
